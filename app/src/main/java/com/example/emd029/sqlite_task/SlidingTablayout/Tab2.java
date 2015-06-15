@@ -1,18 +1,20 @@
 package com.example.emd029.sqlite_task.SlidingTablayout;
 
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.emd029.sqlite_task.DbHandler;
 import com.example.emd029.sqlite_task.Global;
-import com.example.emd029.sqlite_task.BaseAdapter_list;
+import com.example.emd029.sqlite_task.ListNewPage.ListEditPage;
 import com.example.emd029.sqlite_task.R;
+import com.example.emd029.sqlite_task.StudentNames;
 
 import java.util.ArrayList;
 
@@ -22,8 +24,8 @@ import java.util.ArrayList;
 public class Tab2 extends Fragment {
     //creating a fragment for a viewpager tabview
     ListView listView2;
-    BaseAdapter_list baseAdapterlist;
-    ArrayList<String> na;
+    ArrayList<StudentNames> studentlist;
+    AdapterBind adapterBind;
 
     public Tab2() {
 
@@ -36,15 +38,26 @@ public class Tab2 extends Fragment {
         listView2 = (ListView) view.findViewById(R.id.listView2);
         DbHandler dbHandler = new DbHandler(getActivity());
         if (Global.search_STATUS) {
-            na = dbHandler.searchByInputText(Global.ssignment_STATUS);
+            studentlist = dbHandler.searchByInputTxt(Global.ssignment_STATUS);
         } else {
             //get a data into a arraylist by calling a method in a DbHandler
-            na = dbHandler.getalldatas();
+            studentlist = dbHandler.getalldatas();
         }
         //pass a arraylist into a base adapter class Hai
-        baseAdapterlist = new BaseAdapter_list(getActivity(), na);
+        adapterBind = new AdapterBind(getActivity(), studentlist);
         //set a adapter into a listview using a baseadapter class object hai
-        listView2.setAdapter(baseAdapterlist);
+        listView2.setAdapter(adapterBind);
+        listView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(getActivity(), ListEditPage.class);
+                intent.putExtra("person name",studentlist.get(position).getName());
+                intent.putExtra("date",studentlist.get(position).getDate());
+                intent.putExtra("time",studentlist.get(position).getTime());
+                intent.putExtra("description",studentlist.get(position).getDescription());
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

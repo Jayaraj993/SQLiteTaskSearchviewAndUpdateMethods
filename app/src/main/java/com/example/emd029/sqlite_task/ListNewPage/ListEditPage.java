@@ -11,11 +11,15 @@ import android.view.View;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.emd029.sqlite_task.DbHandler;
 import com.example.emd029.sqlite_task.R;
+import com.example.emd029.sqlite_task.Sqlite_MainActivity;
+import com.example.emd029.sqlite_task.StudentNames;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,20 +27,43 @@ import java.util.Locale;
 
 
 public class ListEditPage extends AppCompatActivity {
-    TextView timeshow,dateshow;
-    EditText personName;
+     public TextView timeshow,dateshow;
+    public EditText personName,description;
+    public Spinner spinner;
+    Intent intent;
+    StudentNames studentNames;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_edit_page);
-        Intent intent=getIntent();
-        String name=intent.getStringExtra("person name");
+        studentNames = new StudentNames();
+        spinner= (Spinner) findViewById(R.id.spinnerstatusview);
+        description= (EditText) findViewById(R.id.descriptionview);
+        dateshow= (TextView) findViewById(R.id.dateshow);
+        timeshow= (TextView) findViewById(R.id.timeshow);
         personName= (EditText) findViewById(R.id.PersonName);
-        personName.setText(name);
-
+        intent=getIntent();
+        gettingPersonName();
 
     }
+    public void gettingPersonName(){
+        String name=intent.getStringExtra("person name");
+        dateshow.setText(intent.getStringExtra("date"));
+        timeshow.setText(intent.getStringExtra("time"));
+        description.setText(intent.getStringExtra("description"));
+        String names=intent.getStringExtra("NameofPerson");
+        if (name!=null) {
+            personName.setText(name);
+        }else {
+            personName.setText(names);
+        }
+    }
+    public void details(){
+
+    }
+
     public void datePicker() {
         Calendar date = Calendar.getInstance();
         //to show current date in the datepicker
@@ -74,18 +101,29 @@ public class ListEditPage extends AppCompatActivity {
     }
 
     public void dateClickFunction(View view) {
-        dateshow= (TextView) findViewById(R.id.dateshow);
         datePicker();
     }
     public void timeClickFunction(View view){
-        /*Calendar c1=Calendar.getInstance();
-        SimpleDateFormat dateFormat=new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
-        String time=dateFormat.format(c1.getTime());
-        timeshow= (TextView) findViewById(R.id.timeshow);
-        timeshow.setText(time);*/
-        timeshow= (TextView) findViewById(R.id.timeshow);
         timePicker();
     }
+    public void okButton(View view){
+        DbHandler dbHandler=new DbHandler(this);
+        studentNames.setName(personName.getText().toString());
+        studentNames.setAssignmentTask(spinner.getSelectedItem().toString());
+        studentNames.setDate(dateshow.getText().toString());
+        studentNames.setTime(timeshow.getText().toString());
+        studentNames.setDescription(description.getText().toString());
+
+        dbHandler.update(studentNames);
+        intent = new Intent(this,Sqlite_MainActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+    public void cancelbutton(View view){
+        finish();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

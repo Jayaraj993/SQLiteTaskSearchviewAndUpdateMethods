@@ -10,13 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.emd029.sqlite_task.DbHandler;
 import com.example.emd029.sqlite_task.Global;
-import com.example.emd029.sqlite_task.BaseAdapter_list;
 import com.example.emd029.sqlite_task.ListNewPage.ListEditPage;
 import com.example.emd029.sqlite_task.R;
+import com.example.emd029.sqlite_task.StudentNames;
 
 import java.util.ArrayList;
 
@@ -27,10 +26,8 @@ public class Tab1 extends Fragment {
     //creating a fragment for a viewpager tabview
     Context context;
     public ListView listView1;
-
-    ArrayList<String> na;
-    BaseAdapter_list baseAdapterlist;
-
+    ArrayList<StudentNames> studentsList;
+    AdapterBind adapterBind;
 
     public Tab1(){
 
@@ -44,25 +41,28 @@ public class Tab1 extends Fragment {
         if(Global.search_STATUS){
 
             //get a data into a arraylist by calling a method in a DbHandler
-            na = dbHandler.searchByInputText(Global.ssignment_STATUS);
+            studentsList = dbHandler.searchByInputTxt(Global.ssignment_STATUS);
         }
         //get a data into a arraylist by calling a method in a DbHandler
         else {
 
-            na = dbHandler.getalldata();
+            studentsList = dbHandler.getall();
         }
         //pass a arraylist to abase adapter class hai
-        baseAdapterlist =new BaseAdapter_list(getActivity(),na);
+       // baseAdapterlist =new BaseAdapter_list(getActivity(),na);
+        adapterBind =new AdapterBind(getActivity(),studentsList);
         //set a adapter using a base adapter class object hai
-        listView1.setAdapter(baseAdapterlist);
+        listView1.setAdapter(adapterBind);
         listView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=new Intent(getActivity(), ListEditPage.class);
                // String empn=((TextView)view.findViewById(R.id.textView)).getText().toString();
 
-                intent.putExtra("person name",((TextView)view.findViewById(R.id.textView)).getText().toString());
-
+                intent.putExtra("person name",studentsList.get(position).getName());
+                intent.putExtra("date",studentsList.get(position).getDate());
+                intent.putExtra("time",studentsList.get(position).getTime());
+                intent.putExtra("description",studentsList.get(position).getDescription());
                 startActivity(intent);
             }
         });

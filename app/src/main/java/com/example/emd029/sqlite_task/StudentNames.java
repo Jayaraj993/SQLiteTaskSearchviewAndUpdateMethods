@@ -9,6 +9,10 @@ public class StudentNames {
     private String subject;
     private String assignmentTask;
 
+    private String description;
+    private String date;
+    private String time;
+
     public StudentNames(){
       /*  this.id=1;
         this.name="jayaraj";
@@ -20,6 +24,10 @@ public class StudentNames {
         this.name=name;
         this.subject=subject;
         this.assignmentTask=assignmentTask;
+
+        this.description=description;
+        this.date=date;
+        this.time=time;
     }
     //using encapsulation set and get data
     public int getId(){
@@ -45,7 +53,25 @@ public class StudentNames {
     }
     public void setAssignmentTask(String assignmentTask){
         this.assignmentTask=assignmentTask;
+    }
 
+    public String getDescription(){
+        return description;
+    }
+    public void setDescription(String description){
+        this.description=description;
+    }
+    public String getDate(){
+        return date;
+    }
+    public void setDate(String date){
+        this.date=date;
+    }
+    public String getTime(){
+        return time;
+    }
+    public void setTime(String time){
+        this.time=time;
     }
 
 }

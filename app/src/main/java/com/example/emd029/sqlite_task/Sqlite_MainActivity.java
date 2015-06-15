@@ -1,6 +1,7 @@
 package com.example.emd029.sqlite_task;
 
 
+import android.content.SharedPreferences;
 import android.support.v4.view.ViewPager;
 
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.emd029.sqlite_task.SlidingTablayout.SlidingTabLayout;
 import com.example.emd029.sqlite_task.SlidingTablayout.ViewPagerAdapter;
@@ -19,25 +21,32 @@ public class Sqlite_MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     ViewPager viewPager;
     ViewPagerAdapter adapter;
-    SlidingTabLayout slidingTabLayout;
-    int NumofTabs=2;
+    SlidingTabLayout slidingTabLayout;boolean alreadyexecuted;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //getSupportActionBar().hide();
         setContentView(R.layout.activity_sqlite__main);
-        DbHandler handler=new DbHandler(this);
-        handler.deletealldata();
-        database();
+
+        DbHandler handler=new DbHandler(Sqlite_MainActivity.this);
+        //handler.addName(new StudentNames(1, "madan", "Maths", "Completed"));
+        //handler.deletealldata();
+            if (!handler.checkDBExists()) {
+                handler.deletealldata();
+                Toast.makeText(getApplicationContext(), "DB CREATION", Toast.LENGTH_SHORT).show();
+                database();
+
+            }
+
+
         //set a toolbar as a action bar
         toolbar= (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         Global.search_STATUS = false;
         //seta view pager by passing a adapter of a view page adapter class that contains a position of fragments
-        adapter=new ViewPagerAdapter(getSupportFragmentManager());
-
         viewPager= (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(adapter);
+        adaptercal();
         //set a sliding tab layout
         slidingTabLayout= (SlidingTabLayout) findViewById(R.id.slidingtablayout);
         slidingTabLayout.setDistributeEvenly(true);
@@ -69,26 +78,28 @@ public class Sqlite_MainActivity extends AppCompatActivity {
        // toolbar.inflateMenu(R.menu.menu_sqlite__main);
     }
     public void database(){
-        //calling a DbHandler database class
-        DbHandler handler=new DbHandler(Sqlite_MainActivity.this);
-        //adding data into a table in database000000
-        handler.addName(new StudentNames(1, "jayaraj","Maths", "Completed"));
-        handler.addName(new StudentNames(1,"ragu","Maths","NotCompleted"));
-        handler.addName(new StudentNames(1,"vijay","Maths","Completed"));
-        handler.addName(new StudentNames(1,"dhana","Maths","NotCompleted"));
-        handler.addName(new StudentNames(1,"rajesh","Maths","NotCompleted"));
-        handler.addName(new StudentNames(1,"raja","Maths","Completed"));
-        handler.addName(new StudentNames(1,"ramesh","Maths","Completed"));
-        handler.addName(new StudentNames(1,"vicky","Maths","NotCompleted"));
-        handler.addName(new StudentNames(1,"madan","Maths","Completed"));
-        handler.addName(new StudentNames(1,"vinay","Maths","Completed"));
-        handler.addName(new StudentNames(1,"babu","Maths","NotCompleted"));
-        handler.addName(new StudentNames(1,"baskar","Maths","Completed"));
-        handler.addName(new StudentNames(1,"vinoth","Maths","Completed"));
-        handler.addName(new StudentNames(1,"mani","Maths","NotCompleted"));
-        //the below array list is used to get the details of the table
-        //create arraylist
-        //the below list will adding all data in to a buffer string
+
+            //calling a DbHandler database class
+            DbHandler handler = new DbHandler(Sqlite_MainActivity.this);
+            //adding data into a table in database000000
+            handler.addName(new StudentNames(1, "jayaraj", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "ragu", "Maths", "NotCompleted"));
+            handler.addName(new StudentNames(1, "vijay", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "dhana", "Maths", "NotCompleted"));
+            handler.addName(new StudentNames(1, "rajesh", "Maths", "NotCompleted"));
+            handler.addName(new StudentNames(1, "raja", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "ramesh", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "vicky", "Maths", "NotCompleted"));
+            handler.addName(new StudentNames(1, "madan", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "vinay", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "babu", "Maths", "NotCompleted"));
+            handler.addName(new StudentNames(1, "baskar", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "vinoth", "Maths", "Completed"));
+            handler.addName(new StudentNames(1, "mani", "Maths", "NotCompleted"));
+
+            //the below array list is used to get the details of the table
+            //create arraylist
+            //the below list will adding all data in to a buffer string
        /* List<StudentNames> namesList=handler.getalldata();
         StringBuffer buffer=new StringBuffer();
         for (StudentNames names:namesList){
@@ -97,6 +108,11 @@ public class Sqlite_MainActivity extends AppCompatActivity {
 
         }
         textView.setText(buffer.toString());*/
+
+    }
+    public void adaptercal(){
+        adapter=new ViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adapter);
     }
 
     @Override
@@ -118,8 +134,7 @@ public class Sqlite_MainActivity extends AppCompatActivity {
                    // Toast.makeText(Sqlite_MainActivity.this,Integer.toString(cnt),Toast.LENGTH_LONG).show();
                     Global.search_STATUS = true;
                     Global.ssignment_STATUS = query;
-                    adapter=new ViewPagerAdapter(getSupportFragmentManager());
-                    viewPager.setAdapter(adapter);
+                    adaptercal();
 
 
             }
