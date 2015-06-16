@@ -9,6 +9,10 @@
     android:icon="@drawable/ic_search"
     android:title="Search"
     app:actionViewClass="android.support.v7.widget.SearchView"/>
+    <item
+        android:id="@+id/delete"
+        android:title="Delete">
+    </item>
 
 
    <!-- <EditText android:imeOptions="search" />-->

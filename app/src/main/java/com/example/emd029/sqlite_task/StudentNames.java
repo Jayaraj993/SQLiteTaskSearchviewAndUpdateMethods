@@ -8,7 +8,6 @@ public class StudentNames {
     private String name;
     private String subject;
     private String assignmentTask;
-
     private String description;
     private String date;
     private String time;
@@ -33,24 +32,31 @@ public class StudentNames {
     public int getId(){
         return id;
     }
+
     public void setId(int id){
         this.id=id;
     }
+
     public String getName(){
         return name;
     }
+
     public void setName(String name){
         this.name=name;
     }
+
     public String getSubject(){
         return subject;
     }
+
     public void setSubject(String subject){
         this.subject=subject;
     }
+
     public String getAssignmentTask(){
         return assignmentTask;
     }
+
     public void setAssignmentTask(String assignmentTask){
         this.assignmentTask=assignmentTask;
     }
@@ -58,20 +64,24 @@ public class StudentNames {
     public String getDescription(){
         return description;
     }
+
     public void setDescription(String description){
         this.description=description;
     }
+
     public String getDate(){
         return date;
     }
+
     public void setDate(String date){
         this.date=date;
     }
+
     public String getTime(){
         return time;
     }
+
     public void setTime(String time){
         this.time=time;
     }
-
 }

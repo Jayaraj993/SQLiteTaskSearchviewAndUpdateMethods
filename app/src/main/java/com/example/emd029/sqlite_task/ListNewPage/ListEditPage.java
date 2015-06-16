@@ -33,7 +33,6 @@ public class ListEditPage extends AppCompatActivity {
     Intent intent;
     StudentNames studentNames;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,8 +45,8 @@ public class ListEditPage extends AppCompatActivity {
         personName= (EditText) findViewById(R.id.PersonName);
         intent=getIntent();
         gettingPersonName();
-
     }
+
     public void gettingPersonName(){
         String name=intent.getStringExtra("person name");
         dateshow.setText(intent.getStringExtra("date"));
@@ -59,9 +58,6 @@ public class ListEditPage extends AppCompatActivity {
         }else {
             personName.setText(names);
         }
-    }
-    public void details(){
-
     }
 
     public void datePicker() {
@@ -97,15 +93,16 @@ public class ListEditPage extends AppCompatActivity {
         }, hour, miniute, false);
         timePickerDialog.setTitle("select the time");
         timePickerDialog.show();
-
     }
 
     public void dateClickFunction(View view) {
         datePicker();
     }
+
     public void timeClickFunction(View view){
         timePicker();
     }
+
     public void okButton(View view){
         DbHandler dbHandler=new DbHandler(this);
         studentNames.setName(personName.getText().toString());
@@ -113,13 +110,12 @@ public class ListEditPage extends AppCompatActivity {
         studentNames.setDate(dateshow.getText().toString());
         studentNames.setTime(timeshow.getText().toString());
         studentNames.setDescription(description.getText().toString());
-
         dbHandler.update(studentNames);
         intent = new Intent(this,Sqlite_MainActivity.class);
         startActivity(intent);
         finish();
-
     }
+
     public void cancelbutton(View view){
         finish();
     }
@@ -137,12 +133,10 @@ public class ListEditPage extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

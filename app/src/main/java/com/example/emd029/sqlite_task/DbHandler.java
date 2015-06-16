@@ -39,7 +39,6 @@ public class DbHandler extends SQLiteOpenHelper {
     public DbHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
-
     }
 
     @Override
@@ -49,7 +48,6 @@ public class DbHandler extends SQLiteOpenHelper {
                 " COLUMN_ASSIGNMENTTASK TEXT, COLUMN_DESCRIPTION TEXT, COLUMN_DATE TEXT, COLUMN_TIME TEXT)");
         // Toast.makeText(context,"table created",Toast.LENGTH_LONG).show();
         Log.d("DB", "Students Created");
-
     }
 
     @Override
@@ -63,7 +61,6 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
-
         if (db.isOpen()) {
             ContentValues insertvalues = new ContentValues();
             //insertvalues.put("COLUMN_ID", names.getId());
@@ -79,8 +76,6 @@ public class DbHandler extends SQLiteOpenHelper {
     }
     public void update(StudentNames names){
         SQLiteDatabase db=getWritableDatabase();
-//        Toast.makeText(context, names.getName()+names.getDate()+names.getTime()+names.getDescription()+names.getAssignmentTask()
-//                , Toast.LENGTH_SHORT).show();
         ContentValues values=new ContentValues();
         values.put("COLUMN_DESCRIPTION", names.getDescription() );
         values.put("COLUMN_DATE",names.getDate() );
@@ -101,7 +96,6 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         // long count = DatabaseUtils.queryNumEntries(db,"");
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         //add alldata in a arraylist
         if (cursor.moveToFirst()) {
             do {
@@ -114,13 +108,10 @@ public class DbHandler extends SQLiteOpenHelper {
                 //Toast.makeText(context, cursor.getString(cursor.getColumnIndex("COLUMN_DESCRIPTION")), Toast.LENGTH_SHORT).show();
                 studentNamesList.add(studentNames);
             } while (cursor.moveToNext());
-
         }
-
         // Toast.makeText(context,namesList.toString(),Toast.LENGTH_LONG).show();
         return studentNamesList;
     }
-
 
     public ArrayList<StudentNames> getalldatas() {
         //crate a arraylist
@@ -129,14 +120,11 @@ public class DbHandler extends SQLiteOpenHelper {
         String selectQuery = "SELECT COLUMN_NAME, COLUMN_DATE, COLUMN_TIME, COLUMN_DESCRIPTION FROM TABLE_NAME where COLUMN_ASSIGNMENTTASK='NotCompleted'";
         //select all query
         SQLiteDatabase db = this.getWritableDatabase();
-
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         //add alldata in a arraylist
         if (cursor.moveToFirst()) {
             do {
                 studentNames=new StudentNames();
-
                 studentNames.setName(cursor.getString(cursor.getColumnIndex("COLUMN_NAME")));
                 studentNames.setDate(cursor.getString(cursor.getColumnIndex("COLUMN_DATE")));
                 studentNames.setTime(cursor.getString(cursor.getColumnIndex("COLUMN_TIME")));
@@ -158,7 +146,6 @@ public class DbHandler extends SQLiteOpenHelper {
     public ArrayList<StudentNames> searchByInputTxt(String inputText) {
         SQLiteDatabase db = getWritableDatabase();
         //String query ="SELECT COLUMN_NAME FROM TABLE_NAME where COLUMN_NAME='"+inputText+"'";
-
         //String query = "Select COLUMN_NAME from TABLE_NAME Where(COLUMN_NAME like " + "'%" + inputText + "%'" + ")";
         String query = "SELECT COLUMN_NAME, COLUMN_DATE, COLUMN_TIME FROM TABLE_NAME where(COLUMN_NAME like " + "'%" + inputText + "%'" + ")";
         Cursor cursor = db.rawQuery(query, null);
@@ -174,7 +161,6 @@ public class DbHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
 
         }
-
         // Toast.makeText(context,namesList.toString(),Toast.LENGTH_LONG).show();
         return studentNamesList;
     }
@@ -186,7 +172,6 @@ public class DbHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         // long count = DatabaseUtils.queryNumEntries(db,"");
         Cursor cursor = db.rawQuery(selectQuery, null);
-
         //add alldata in a arraylist
         if (cursor.getCount() > 0 ) {
             return true;
