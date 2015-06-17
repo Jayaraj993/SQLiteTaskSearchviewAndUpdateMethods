@@ -5,9 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.emd029.sqlite_task.Tab1;
-import com.example.emd029.sqlite_task.Tab2;
-
 /**
  * Created by EMD029 on 6/4/2015.
  */

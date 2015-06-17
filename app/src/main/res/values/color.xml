@@ -4,4 +4,8 @@
     <color name="ColorPrimary">#E91E63</color>
     <color name="ColorPrimaryDark">#C2185B</color>
     <color name="tabscrollcolor">#880E4F</color>
+    <color name="white">#ffffff</color>
+    <color name="blue">#0000CC</color>
+    <color name="pink">#FF00CC</color>
+
 </resources>

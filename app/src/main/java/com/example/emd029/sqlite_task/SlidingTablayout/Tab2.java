@@ -1,4 +1,4 @@
-package com.example.emd029.sqlite_task;
+package com.example.emd029.sqlite_task.SlidingTablayout;
 
 
 import android.content.Intent;
@@ -15,7 +15,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.example.emd029.sqlite_task.DbHandler;
+import com.example.emd029.sqlite_task.Global;
 import com.example.emd029.sqlite_task.ListNewPage.ListEditPage;
+import com.example.emd029.sqlite_task.R;
+import com.example.emd029.sqlite_task.StudentNames;
 
 import java.util.ArrayList;
 

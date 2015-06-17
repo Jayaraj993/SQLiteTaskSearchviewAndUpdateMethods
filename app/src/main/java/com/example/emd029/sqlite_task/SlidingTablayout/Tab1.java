@@ -1,7 +1,8 @@
-package com.example.emd029.sqlite_task;
+package com.example.emd029.sqlite_task.SlidingTablayout;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.SparseBooleanArray;
@@ -15,7 +16,12 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.emd029.sqlite_task.DbHandler;
+import com.example.emd029.sqlite_task.Global;
 import com.example.emd029.sqlite_task.ListNewPage.ListEditPage;
+import com.example.emd029.sqlite_task.R;
+import com.example.emd029.sqlite_task.StudentNames;
 
 
 import java.util.ArrayList;
@@ -99,13 +105,12 @@ public class Tab1 extends Fragment {
                 switch (item.getItemId()) {
                     case R.id.delete:
                         SparseBooleanArray selected = adapterBind.getSelectedItems();
-                        Toast.makeText(getActivity(), selected.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getActivity(), selected.toString(), Toast.LENGTH_SHORT).show();
                         for (int i= (adapterBind.getSelectedCount()-1);i>=0;i--){
                             if (selected.valueAt(i)){
-                                StudentNames selectedItem=adapterBind.getItem(selected.keyAt(i));
 
+                                StudentNames  selectedItem=(StudentNames)adapterBind.getItem(selected.keyAt(i));
                                 adapterBind.remove(selectedItem);
-                                adapterBind.notifyDataSetChanged();
                                 //Toast.makeText(getActivity(), selected.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
